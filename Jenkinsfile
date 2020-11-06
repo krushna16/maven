@@ -7,7 +7,7 @@ pipeline
         {
             steps
             {
-                git 'https://github.com/intelliqittrainings/maven.git'
+                git 'https://github.com/krushna16/maven.git'
             }
         }
         stage('ContinousBuild')
@@ -30,8 +30,8 @@ pipeline
         {
             steps
             {
-                git 'https://github.com/intelliqittrainings/FunctionalTesting.git'
-		        sh 'java -jar /var/lib/jenkins/workspace/ScriptedPipeline/testing.jar'
+                git 'https://github.com/krushna16/FunctionalTesting.git'
+		sh 'java -jar /var/lib/jenkins/workspace/ScriptedPipeline/testing.jar'
             }
         
         }
