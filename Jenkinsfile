@@ -3,41 +3,47 @@ pipeline
     agent any
     stages
     {
-        stage('ContinuousDownload')
+        stage('ContinousDownload')
         {
             steps
             {
                 git 'https://github.com/intelliqittrainings/maven.git'
             }
         }
-        stage('ContinuousBuild')
+        stage('ContinousBuild')
         {
             steps
             {
-                sh 'mvn package'
+               sh 'mvn package'
             }
+        
         }
-        stage('ContinuousDeployment')
+        stage('ContinousDeployment')
         {
             steps
             {
-                sh 'scp /home/ubuntu/.jenkins/workspace/DeclarativePipeline/webapp/target/webapp.war ubuntu@172.31.80.99:/var/lib/tomcat9/webapps/newtestapp.war'
+                sh 'scp /var/lib/jenkins/workspace/ScriptedPipeline/webapp/target/webapp.war ubuntu@10.0.1.5:/var/lib/tomcat8/webapps/qaapp.war'
             }
+        
         }
-        stage('ContinuousTesting')
+        stage('ContinousTesting')
         {
             steps
             {
                 git 'https://github.com/intelliqittrainings/FunctionalTesting.git'
-                sh 'java -jar /home/ubuntu/.jenkins/workspace/DeclarativePipeline/testing.jar'
+		        sh 'java -jar /var/lib/jenkins/workspace/ScriptedPipeline/testing.jar'
             }
+        
         }
-        stage('ContinuousDelivery')
+
+	stage('ContinousDelivery')
         {
             steps
             {
-                 sh 'scp /home/ubuntu/.jenkins/workspace/DeclarativePipeline/webapp/target/webapp.war ubuntu@172.31.93.5:/var/lib/tomcat9/webapps/newprodapp.war'
-            }
+                sh 'scp /var/lib/jenkins/workspace/ScriptedPipeline/webapp/target/webapp.war ubuntu@10.0.1.6:/var/lib/tomcat8/webapps/prodapp.war'
+	        }
+        
         }
+        
     }
 }
